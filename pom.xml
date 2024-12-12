@@ -5,8 +5,12 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>E2e_test_Demo</name>
   <description>E2e_test_Demo</description>
-  
-  <build>
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+
+    <build>
     <plugins>
      <plugin>
     <groupId>org.apache.maven.plugins</groupId>
@@ -29,6 +33,12 @@
     <artifactId>selenium-java</artifactId>
     <version>3.14.0</version>
 </dependency>
+      <dependency>
+          <groupId>io.github.bonigarcia</groupId>
+          <artifactId>webdrivermanager</artifactId>
+          <version>5.9.2</version>
+          <scope>test</scope>
+      </dependency>
   
   <dependency>
     <groupId>org.testng</groupId>

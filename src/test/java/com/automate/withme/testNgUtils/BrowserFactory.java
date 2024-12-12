@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -15,7 +16,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class BrowserFactory {
 	private static BrowserFactory instance = null;
-	ThreadLocal<WebDriver> webDriver = new ThreadLocal<WebDriver>();
+	WebDriver webDriver ;
 
 	private BrowserFactory() {
 
@@ -34,22 +35,25 @@ public class BrowserFactory {
 			
 //			System.setProperty("webdriver.chrome.driver", "C:\\Users\\Dell\\Desktop\\Tutorials\\Drivers\\chromedriver.exe");
 //			webDriver.set(new ChromeDriver());
-			ChromeOptions options = new ChromeOptions();
+//			ChromeOptions options = new ChromeOptions();
 //		    options.addArguments("--start-maximized");
 //		    options.addArguments("--disable-infobars");
-		DesiredCapabilities dc = DesiredCapabilities.chrome();
-		    dc.setCapability(ChromeOptions.CAPABILITY, options);
-		webDriver.set( new RemoteWebDriver(new URL("http://192.168.26.1:4444/wd/hub"),dc));
+//		DesiredCapabilities dc = DesiredCapabilities.chrome();
+//		    dc.setCapability(ChromeOptions.CAPABILITY, options);
+//		webDriver.set( new RemoteWebDriver(new URL("http://192.168.26.1:4444/wd/hub"),dc));
+			WebDriverManager.chromedriver().setup();
+			webDriver = new ChromeDriver();
 
 			
 		}
 		else if(browser.equalsIgnoreCase("IE")){
 //			 System.setProperty("webdriver.ie.driver", "C:\\Users\\Dell\\Desktop\\Tutorials\\Drivers\\IEDriverServer.exe");
 //			 webDriver.set(new InternetExplorerDriver());
-			DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
-		    capabilities.setCapability("requireWindowFocus", true);
-		    capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-		    webDriver.set(new RemoteWebDriver(new URL("http://192.168.26.1:4444/wd/hub"),capabilities));
+//			DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
+//		    capabilities.setCapability("requireWindowFocus", true);
+//		    capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+			WebDriverManager.firefoxdriver().setup();
+		    webDriver= new FirefoxDriver();
 
 			
 		}
@@ -57,14 +61,14 @@ public class BrowserFactory {
 //			System.setProperty("webdriver.gecko.driver", "C:\\Users\\Dell\\Desktop\\Tutorials\\Drivers\\geckodriver.exe");
 //			 webDriver.set(new FirefoxDriver());
 			 
-			DesiredCapabilities capabilities = DesiredCapabilities.firefox(); 
-			 
-			 webDriver.set(new RemoteWebDriver(new URL("http://192.168.26.1:4444/wd/hub"),capabilities));
+			DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+
+			webDriver= new FirefoxDriver();
 		}
 	}
 
 	public WebDriver getDriver() {
-		return webDriver.get();
+		return webDriver;
 	}
 	}
 
